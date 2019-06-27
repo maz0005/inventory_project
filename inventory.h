@@ -15,8 +15,8 @@ enum DISPLAY_FILTER {KEYWORD = 0, CATEGORY = 1, BRAND = 2, INV_NUM = 3};
 @brief Retrieve previously saved data from 
 @param input_file File holding previously saved data
 */
-int Startup_Handler(std::string &user_name_In, std::string &password_In, std::vector<User_Item> &user_items_In, 
-				std::vector<Electronic> &electronic_items_In, std::vector<Furniture> &furniture_items_In, std::vector<Clothing> &clothing_items_In, std::vector<Book> &book_items_In);
+int Startup_Handler(std::string &user_name_In, std::string &password_In, std::vector<User_Item> &user_items_In, std::vector<Electronic> &electronic_items_In, 
+	std::vector<Furniture> &furniture_items_In, std::vector<Clothing> &clothing_items_In, std::vector<Book> &book_items_In, std::vector<double> &positions_In);
 
 void Display_Menu(DISPLAY_OPTION, DISPLAY_FILTER);
 

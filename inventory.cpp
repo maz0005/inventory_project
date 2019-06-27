@@ -9,34 +9,15 @@
 @brief Retrieve previously saved data from 
 @param input_file File holding previously saved data
 */
-int Startup_Handler(std::string &user_name_In, std::string &password_In, std::vector<User_Item> &user_items_In, 
-				std::vector<Electronic> &electronic_items_In, std::vector<Furniture> &furniture_items_In, std::vector<Clothing> &clothing_items_In, std::vector<Book> &book_items_In) {
- std::string temp;
- std::string item_type;
- std::string type;
- std::string inventory_num;
- std::string manufacturer;
- std::string model;
- std::string price;
- std::string color;
- std::string id_num;
- std::string condition;
- std::string used_condition;
- std::string material;
- std::string length;
- std::string width;
- std::string height;
- std::string gender;
- std::string size;
- std::string title;
- std::string author;
- std::string isbn;
+int Startup_Handler(std::string &user_name_In, std::string &password_In, std::vector<User_Item> &user_items_In, std::vector<Electronic> &electronic_items_In, 
+	std::vector<Furniture> &furniture_items_In, std::vector<Clothing> &clothing_items_In, std::vector<Book> &book_items_In, std::vector<double> &positions_In) {
+
+ std::string data[14];
  std::vector<std::string> misc_names;
  std::vector<std::string> misc_values;
  std::vector<std::string> materials;
  std::vector<std::string> material_percentages;
-
-
+ std::string temp;
 
  std::ifstream input_file;
  input_file.open("inventory_data.txt");
@@ -50,149 +31,37 @@ int Startup_Handler(std::string &user_name_In, std::string &password_In, std::ve
 
  if(!temp.compare("no_saved_data\0")) return 1;
 
- if(temp.compare("end_username_password\0")) {
+ if(temp.compare("end_username_password\0")) { /*Will return 0 if both equal. Means no username or password at this point in text file*/
  		user_name_In = temp;
  		getline(input_file, password_In);
  }
 
  getline(input_file, temp);
 
- while(temp.compare("end_user_items\0")) {
+ while(temp.compare("end_all_items\0")) {
+ 		data[0] = temp;
+ 		for (int i = 1; i < 7; i++) { getline(input_file, data[i]); }
 
- 		item_type = temp;
- 		getline(input_file, inventory_num);
- 		getline(input_file, price);
- 		getline(input_file, id_num);
- 		getline(input_file, type);
- 		getline(input_file, manufacturer);
- 		getline(input_file, model);
-  		getline(input_file, color);
- 		getline(input_file, condition);
- 		getline(input_file, used_condition);
 
- 		getline(input_file, temp);
- 		
- 		while (temp.compare("end_materials\0")) {
- 				materials.push_back(temp);
- 				getline(input_file, temp);
- 				material_percentages.push_back(temp);
- 				getline(input_file, temp);
-
+ 		if (data[0].compare("Electronic\0") == 0) {
+ 				for (int i = 7; i < 10; i++) { getline(input_file, data[i]); }
+ 				Electronic item = Electronic(data[0], data[1], data[2], data[3], data[4], data[5], data[6], data[7], data[8], data[9]);
+ 				electronic_items_In.push_back(item);
  		}
 
- 		getline(input_file, temp);
-
- 		while (temp.compare("end_user_item\0")) {
- 				misc_names.push_back(temp);
- 				getline(input_file, temp);
- 				misc_values.push_back(temp);
- 				getline(input_file, temp);
- 		}
- 	
-
- 		User_Item item = User_Item(item_type, inventory_num, price, id_num, type, manufacturer, model, color, condition, used_condition, materials, material_percentages, misc_names, misc_values);
- 		user_items_In.push_back(item);
- 		materials.clear();
- 		material_percentages.clear();
- 		misc_names.clear();
- 		misc_values.clear();
-
- 		getline(input_file, temp);
-
- }
-
- getline(input_file, temp);
- while(temp.compare("end_electronic_items\0")) {
- 		item_type = temp;
- 		getline(input_file, inventory_num);
- 		getline(input_file, price);
- 		getline(input_file, id_num);
- 		getline(input_file, type);
- 		getline(input_file, manufacturer);
- 		getline(input_file, model);
-  		getline(input_file, color);
- 		getline(input_file, condition);
- 		getline(input_file, used_condition);
-
-
- 		Electronic item = Electronic(item_type, inventory_num, price, id_num, type, manufacturer, model, color, condition, used_condition);
- 		electronic_items_In.push_back(item);
-
- 		getline(input_file, temp);
- }
-
- getline(input_file, temp);
- while(temp.compare("end_furniture_items\0")) {
- 		item_type = temp;
- 		getline(input_file, inventory_num);
- 		getline(input_file, price);
- 		getline(input_file, id_num);
- 		getline(input_file, type);
- 		getline(input_file, manufacturer);
- 		getline(input_file, model);
-  		getline(input_file, color);
- 		getline(input_file, condition);
- 		getline(input_file, used_condition);
- 		getline(input_file, material);
-  		getline(input_file, length);
- 		getline(input_file, width);
- 		getline(input_file, height);
-
-
- 		Furniture item = Furniture(item_type, inventory_num, price, id_num, type, manufacturer, model, color, condition, used_condition, material, length, width, height);
- 		furniture_items_In.push_back(item);
-
- 		getline(input_file, temp);
- }
-
- getline(input_file, temp);
-
- while(temp.compare("end_clothing_items\0")) {
- 		item_type = temp;
- 		getline(input_file, inventory_num);
- 		getline(input_file, price);
- 		getline(input_file, id_num);
- 		getline(input_file, type);
- 		getline(input_file, manufacturer);
- 		getline(input_file, model);
-  		getline(input_file, color);
-  		getline(input_file, gender);
- 		getline(input_file, size);
- 		getline(input_file, condition);
- 		getline(input_file, used_condition);
-
- 		getline(input_file, temp);
- 		while (temp.compare("end_materials\0")) {
- 				materials.push_back(temp);
- 				getline(input_file, temp);
- 				material_percentages.push_back(temp);
- 				getline(input_file, temp);
+ 		else if (data[0].compare("Furniture\0") == 0) {
+ 				for (int i = 7; i < 14; i++) { getline(input_file, data[i]); }
+ 				Furniture item = Furniture(data[0], data[1], data[2], data[3], data[4], data[5], data[6], data[7], data[8], data[9], data[10], data[11], data[12], data[13]);
+ 				furniture_items_In.push_back(item);
  		}
 
 
- 		Clothing item = Clothing(item_type, inventory_num, price, id_num, type, manufacturer, model, color, gender, size, condition, used_condition, materials, material_percentages);
- 		clothing_items_In.push_back(item);
- 		getline(input_file, item_type);
- }
- 
+ 		else if (data[0].compare("Book\0") == 0) {
+ 				for (int i = 7; i < 12; i++) { getline(input_file, data[i]); }
+ 				Book item = Book(data[0], data[1], data[2], data[3], data[4], data[5], data[6], data[7], data[8], data[9], data[10], data[11]);
+ 				book_items_In.push_back(item);
+ 		}
 
- getline(input_file, temp);
- while(temp.compare("end_book_items\0")) {
- 		item_type = temp;
- 		getline(input_file, inventory_num);
- 		getline(input_file, price);
- 		getline(input_file, id_num);
- 		getline(input_file, type);
- 		getline(input_file, title);
- 		getline(input_file, author);
- 		getline(input_file, isbn);
-  		getline(input_file, color);
- 		getline(input_file, condition);
- 		getline(input_file, used_condition);
- 		getline(input_file, material);
-
- 		Book item = Book(item_type, inventory_num, price, id_num, type, title, author, isbn, color, condition, used_condition, material);
- 		book_items_In.push_back(item);
 
  		getline(input_file, temp);
  }

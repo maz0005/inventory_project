@@ -9,10 +9,14 @@ Item::Item() {
 
 }
 
-Item::Item(std::string item_type_In, std::string inventory_num_In, std::string price_In) {
- item_type = item_type_In;
+Item::Item(std::string category_In, std::string inventory_num_In, std::string price_In, std::string id_num_In, std::string color_In, std::string condition_In, std::string used_condition_In) {
+ category = category_In;
  inventory_num = inventory_num_In; 
  price = price_In;
+ id_num = id_num_In;
+ color = color_In;
+ condition = condition_In;
+ used_condition = used_condition_In;
 }
 
 void Item::Print_Type(void) const{
@@ -35,17 +39,12 @@ volatile void Item::Print_Item(void) const {
 
 }
 
-User_Item::User_Item(std::string item_type_In, std::string inventory_num_In, std::string price_In, std::string id_num_In, std::string type_In, std::string manufacturer_In, std::string model_In, 
-				std::string color_In, std::string condition_In, std::string used_condition_In, std::vector<std::string> materials_In, std::vector<std::string> material_percentages_In, 
+User_Item::User_Item(std::string category_In, std::string inventory_num_In, std::string price_In, std::string id_num_In, std::string color_In, std::string condition_In, std::string used_condition_In, 
+				std::string type_In, std::string manufacturer_In, std::string model_In, std::vector<std::string> materials_In, std::vector<std::string> material_percentages_In, 
 				std::vector<std::string> misc_names_In, std::vector<std::string> misc_values_In) 
-						: Item(item_type_In, inventory_num_In, price_In) {
-
- color = color_In; 
- id_num = id_num_In; 
+						: Item(category_In, inventory_num_In, price_In, id_num_In, color_In, condition_In, used_condition_In) {
  manufacturer = manufacturer_In;
  model = model_In;
- condition = condition_In; 
- used_condition = used_condition_In; 
  type = type_In; 
  misc_names = misc_names_In;
  misc_values = misc_values_In;
@@ -54,7 +53,7 @@ User_Item::User_Item(std::string item_type_In, std::string inventory_num_In, std
 }
 
 void User_Item::Print_Item(void) const {
- std::cout << "Inventory#: " << inventory_num << "   Category: " << item_type <<  "   Type: " << type <<"   SKU#: " << id_num  << "   Manufacturer: " << manufacturer <<  "   Model: "  << model 
+ std::cout << "Inventory#: " << inventory_num << "   Category: " << category <<  "   Type: " << type <<"   SKU#: " << id_num  << "   Manufacturer: " << manufacturer <<  "   Model: "  << model 
  			<< "   Color: " << color << "   Condition: " << condition << "   Used Condition: " << used_condition << "   Price: $" << price << std::endl;
 
  if (materials.size() != 0) {
@@ -79,22 +78,17 @@ void User_Item::Print_Item(void) const {
 
 }
 
-Electronic::Electronic(std::string item_type_In, std::string inventory_num_In, std::string price_In, std::string id_num_In, std::string electronic_type_In, std::string manufacturer_In, 
-					std::string model_In, std::string color_In, std::string condition_In, std::string used_condition_In) 
-							: Item(item_type_In, inventory_num_In, price_In) {
-
- color = color_In; 
- id_num = id_num_In;
- condition = condition_In; 
- used_condition = used_condition_In; 
+Electronic::Electronic(std::string category_In, std::string inventory_num_In, std::string price_In, std::string id_num_In, std::string color_In, std::string condition_In, std::string used_condition_In, 
+				std::string electronic_type_In, std::string manufacturer_In, std::string model_In) 
+							: Item(category_In, inventory_num_In, price_In, id_num_In, color_In, condition_In, used_condition_In) {
  electronic_type = electronic_type_In; 
  manufacturer = manufacturer_In; 
  model = model_In;
 }
 
 void Electronic::Print_Item(void) const {
-  std::cout << "Inventory#: " << std::left <<  std::setw(5) << inventory_num  << std::right <<  std::setw(13) << "Category: " << std::left << std::setw(11) << item_type 
-  			 << std::right << std::setw(11) << "Color: " << std::left << std::setw(11) << color << std::right << std::setw(9) << "SKU#: " << std::left << std::setw(8) << id_num  
+  std::cout << "Inventory#: " << std::left <<  std::setw(5) << inventory_num  << std::right <<  std::setw(13) << "Category: " << std::left << std::setw(11) << category 
+  			<< std::right << std::setw(11) << "Color: " << std::left << std::setw(11) << color << std::right << std::setw(9) << "SKU#: " << std::left << std::setw(8) << id_num  
   			<< "\n" /*End row 1*/
   			<< std::right << std::setw(30) <<  "Type: " << std::left << std::setw(11) << electronic_type << std::right << std::setw(11) << "Condition: " 
   			<< std::left << std::setw(11) << condition << std::right << std::setw(10) << "Price: $" << std::left << std::setw(11) << price
@@ -107,13 +101,10 @@ void Electronic::Print_Item(void) const {
 
 }
 
-Furniture::Furniture(std::string item_type_In, std::string inventory_num_In, std::string price_In, std::string id_num_In, std::string furniture_type_In, std::string manufacturer_In, std::string model_In, 
-				std::string color_In, std::string condition_In, std::string used_condition_In, std::string material_In, std::string length_In, std::string width_In, std::string height_In)
-						: Item(item_type_In, inventory_num_In, price_In) {
- color = color_In; 
- id_num = id_num_In; 
- condition = condition_In; 
- used_condition = used_condition_In; 
+Furniture::Furniture(std::string category_In, std::string inventory_num_In, std::string price_In, std::string id_num_In, std::string color_In, std::string condition_In, std::string used_condition_In, 
+				std::string furniture_type_In, std::string manufacturer_In, std::string model_In, std::string material_In, std::string length_In, 
+				std::string width_In, std::string height_In)
+						: Item(category_In, inventory_num_In, price_In, id_num_In, color_In, condition_In, used_condition_In) {
  furniture_type = furniture_type_In; 
  manufacturer = manufacturer_In; 
  model = model_In; 
@@ -124,7 +115,7 @@ Furniture::Furniture(std::string item_type_In, std::string inventory_num_In, std
 }
 
 void Furniture::Print_Item(void) const {
-  std::cout << "Inventory#: " << std::left <<  std::setw(5) << inventory_num  << std::right <<  std::setw(13) << "Category: " << std::left << std::setw(11) << item_type 
+  std::cout << "Inventory#: " << std::left <<  std::setw(5) << inventory_num  << std::right <<  std::setw(13) << "Category: " << std::left << std::setw(11) << category 
   			 << std::right << std::setw(11) << "Color: " << std::left << std::setw(11) << color << std::right << std::setw(9) << "Length: " << std::left << std::setw(9)
   			<< length << std::right << std::setw(9) << "SKU#: " << std::left << std::setw(8) << id_num  
   			<< "\n" /*End row 1*/
@@ -139,14 +130,10 @@ void Furniture::Print_Item(void) const {
 
 }
 
-Clothing::Clothing(std::string item_type_In, std::string inventory_num_In, std::string price_In, std::string id_num_In, std::string clothing_type_In, std::string manufacturer_In, 
-				std::string model_In, std::string color_In, std::string gender_In, std::string size_In,std::string condition_In, std::string used_condition_In, 
+Clothing::Clothing(std::string category_In, std::string inventory_num_In, std::string price_In, std::string id_num_In, std::string color_In, std::string condition_In, std::string used_condition_In, 
+				std::string clothing_type_In, std::string manufacturer_In, std::string model_In, std::string gender_In, std::string size_In, 
 				std::vector<std::string> materials_In, std::vector<std::string> material_percentages_In) 
-						: Item(item_type_In, inventory_num_In, price_In) {
- color = color_In; 
- id_num = id_num_In; 
- condition = condition_In; 
- used_condition = used_condition_In; 
+						: Item(category_In, inventory_num_In, price_In, id_num_In, color_In, condition_In, used_condition_In) {
  clothing_type = clothing_type_In; 
  manufacturer = manufacturer_In; 
  model = model_In; 
@@ -161,14 +148,9 @@ void Clothing::Print_Item(void) const {
 
 }
 
-Book::Book(std::string item_type_In, std::string inventory_num_In, std::string price_In, std::string id_num_In, std::string book_type_In, std::string title_In, std::string author_In, 
-			std::string isbn_In, std::string color_In, std::string condition_In, std::string used_condition_In, std::string material_In) 
-				: Item(item_type_In, inventory_num_In, price_In) {
-
- color = color_In; 
- id_num = id_num_In; 
- condition = condition_In; 
- used_condition = used_condition_In; 
+Book::Book(std::string category_In, std::string inventory_num_In, std::string price_In, std::string id_num_In, std::string color_In, std::string condition_In, std::string used_condition_In, 
+		std::string book_type_In, std::string title_In, std::string author_In, std::string isbn_In, std::string material_In) 
+				: Item(category_In, inventory_num_In, price_In, id_num_In, color_In, condition_In, used_condition_In) {
  book_type = book_type_In; 
  title = title_In; 
  author = author_In;
@@ -179,7 +161,7 @@ Book::Book(std::string item_type_In, std::string inventory_num_In, std::string p
 
 void Book::Print_Item(void) const {
 
-  std::cout << "Inventory#: " << std::left <<  std::setw(5) << inventory_num  << std::right << std::setw(13) << "Category: " << std::left << std::setw(11) << item_type 
+  std::cout << "Inventory#: " << std::left <<  std::setw(5) << inventory_num  << std::right << std::setw(13) << "Category: " << std::left << std::setw(11) << category 
   			 << std::right << std::setw(11) << "Color: " << std::left << std::setw(11) << color << std::right << std::setw(9) << "SKU#: " << std::left << std::setw(8) << id_num  
   			<< "\n" /*End row 1*/
   			<< std::right << std::setw(30) <<  "Type: " << std::left << std::setw(11) << book_type << std::right << std::setw(11) << "Condition: " 

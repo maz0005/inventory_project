@@ -5,12 +5,8 @@
 #include <vector>
 
 
-/**
-@brief Retrieve previously saved data from 
-@param input_file File holding previously saved data
-*/
 int Startup_Handler(std::string &user_name_In, std::string &password_In, std::vector<User_Item> &user_items_In, std::vector<Electronic> &electronic_items_In, 
-	std::vector<Furniture> &furniture_items_In, std::vector<Clothing> &clothing_items_In, std::vector<Book> &book_items_In, std::vector<double> &positions_In) {
+	std::vector<Furniture> &furniture_items_In, std::vector<Clothing> &clothing_items_In, std::vector<Book> &book_items_In) {
 
  std::string data[14];
  std::vector<std::string> misc_names;
@@ -42,11 +38,16 @@ int Startup_Handler(std::string &user_name_In, std::string &password_In, std::ve
  		data[0] = temp;
  		for (int i = 1; i < 7; i++) { getline(input_file, data[i]); }
 
-
  		if (data[0].compare("Electronic\0") == 0) {
  				for (int i = 7; i < 10; i++) { getline(input_file, data[i]); }
  				Electronic item = Electronic(data[0], data[1], data[2], data[3], data[4], data[5], data[6], data[7], data[8], data[9]);
  				electronic_items_In.push_back(item);
+ 		}
+
+ 		else if (data[0].compare("Book\0") == 0) {
+ 				for (int i = 7; i < 12; i++) { getline(input_file, data[i]); }
+ 				Book item = Book(data[0], data[1], data[2], data[3], data[4], data[5], data[6], data[7], data[8], data[9], data[10], data[11]);
+ 				book_items_In.push_back(item);
  		}
 
  		else if (data[0].compare("Furniture\0") == 0) {
@@ -55,12 +56,25 @@ int Startup_Handler(std::string &user_name_In, std::string &password_In, std::ve
  				furniture_items_In.push_back(item);
  		}
 
-
- 		else if (data[0].compare("Book\0") == 0) {
+  		else if (data[0].compare("Clothing\0") == 0) {
  				for (int i = 7; i < 12; i++) { getline(input_file, data[i]); }
- 				Book item = Book(data[0], data[1], data[2], data[3], data[4], data[5], data[6], data[7], data[8], data[9], data[10], data[11]);
- 				book_items_In.push_back(item);
+ 				getline(input_file, temp);
+ 				while(temp.compare("end_materials")) {
+ 						materials.push_back(temp);
+ 						getline(input_file, temp);
+ 						material_percentages.push_back(temp);
+ 						getline(input_file, temp);
+ 				}
+ 				Clothing item = Clothing(data[0], data[1], data[2], data[3], data[4], data[5], data[6], data[7], data[8], data[9], data[10], data[11], materials, material_percentages);
+ 				clothing_items_In.push_back(item);
+ 				materials.clear();
+ 				material_percentages.clear();
  		}
+
+  		else if (data[0].compare("User Item\0") == 0) { 
+ 				
+ 		}
+
 
 
  		getline(input_file, temp);

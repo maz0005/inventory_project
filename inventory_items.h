@@ -29,17 +29,11 @@ public:
 
 class User_Item : public Item {
 private:
-	std::string type;
-	std::string manufacturer;
-	std::string model;
 	std::vector<std::string> misc_names;
 	std::vector<std::string> misc_values;
-	std::vector<std::string> materials;
-	std::vector<std::string> material_percentages;
+
 public:
-	User_Item(std::string category_In, std::string inventory_num_In, std::string price_In, std::string id_num_In, std::string color_In, std::string condition_In, std::string used_condition_In, 
-				std::string type_In, std::string manufacturer_In, std::string model_In, std::vector<std::string> materials_In, std::vector<std::string> material_percentages_In, 
-				std::vector<std::string> misc_names_In, std::vector<std::string> misc_values_In);
+	User_Item(std::vector<std::string> misc_names_In, std::vector<std::string> misc_values_In);
 
 	void Print_Item(void) const;
 };

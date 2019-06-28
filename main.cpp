@@ -11,21 +11,26 @@ int main() {
  std::vector<Furniture> furniture_items;
  std::vector<Clothing> clothing_items;
  std::vector<Book> book_items;
- std::vector<double> positions;
  std::string user_name;
  std::string password;
 
-
- Startup_Handler(user_name, password, user_items, electronic_items, furniture_items, clothing_items, book_items, positions);
+ /*Startup the system. This deals with login if needed*/
+ Startup_Handler(user_name, password, user_items, electronic_items, furniture_items, clothing_items, book_items);
  
  electronic_items[0].Print_Item();
  std::cout << "\n\n";
 
  furniture_items[0].Print_Item();
  std::cout << "\n\n";
+
  furniture_items[1].Print_Item();
  std::cout << "\n\n";
+
  book_items[0].Print_Item();
+ std::cout << "\n\n";
+
+ clothing_items[0].Print_Item();
+ std::cout << "\n\n";
  
  return 0;
 }

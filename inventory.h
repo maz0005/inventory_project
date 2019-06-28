@@ -14,13 +14,25 @@ enum DISPLAY_FILTER {KEYWORD = 0, CATEGORY = 1, BRAND = 2, INV_NUM = 3};
 /**
 @brief Retrieve previously saved data from 
 @param input_file File holding previously saved data
+@param user_name_In Username used for login
+@param password Password used for login
+@param &vector<User_Item>, &vector<Electronic>, &vector<Furniture>, &vector<Clothing>, &vector<Book> vectors you want items stored in.
+@return Return 0 when done retrieving all items. Return 1 if no previously saved data
 */
 int Startup_Handler(std::string &user_name_In, std::string &password_In, std::vector<User_Item> &user_items_In, std::vector<Electronic> &electronic_items_In, 
-	std::vector<Furniture> &furniture_items_In, std::vector<Clothing> &clothing_items_In, std::vector<Book> &book_items_In, std::vector<double> &positions_In);
+	std::vector<Furniture> &furniture_items_In, std::vector<Clothing> &clothing_items_In, std::vector<Book> &book_items_In);
 
-void Display_Menu(DISPLAY_OPTION, DISPLAY_FILTER);
+/**
+@brief Display one of the menu options option
+@param option_In Display one of the menu options
+*/
+void Display_Menu(DISPLAY_OPTION option_In);
 
-void Display_Inventory(DISPLAY_FILTER);
+/**
+@brief Display inventory with a filter option
+@param filter_In Filter option
+*/
+void Display_Inventory(DISPLAY_FILTER filter_In);
 
 void Manage_Inventory(void);
 
@@ -28,6 +40,14 @@ void Change_User_Password(void);
 
 void Manage_Acc_Items(void);
 
+/**
+@brief Generates and returns a new inventory number
+*/
+double New_Inv_Number(void);
+
+/**
+@brief Update the text file: inventory_data.txt
+*/
 void Save_System(void);
 
 void Login(std::string user_name_In, std::string password_In);

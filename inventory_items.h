@@ -19,6 +19,7 @@ protected:
 
 public:
 	Item();
+	Item(std::string category_In);
 	Item(std::string category_In, std::string inventory_num_In, std::string price_In, std::string id_num_In, std::string color_In, std::string condition_In, std::string used_condition_In);
 	void Print_Type(void) const;
 	void Print_Price(void) const;
@@ -33,8 +34,7 @@ private:
 	std::vector<std::string> misc_values;
 
 public:
-	User_Item(std::vector<std::string> misc_names_In, std::vector<std::string> misc_values_In);
-
+	User_Item(std::string category_In, std::vector<std::string> misc_names_In, std::vector<std::string> misc_values_In);
 	void Print_Item(void) const;
 };
 

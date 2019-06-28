@@ -15,6 +15,16 @@ Item::Item() {
  used_condition = "N/A";
 }
 
+Item::Item(std::string category_In) {
+ category = category_In;
+ inventory_num = "N/A"; 
+ price = "N/A";
+ id_num = "N/A";
+ color = "N/A";
+ condition = "N/A";
+ used_condition = "N/A";
+}
+
 Item::Item(std::string category_In, std::string inventory_num_In, std::string price_In, std::string id_num_In, std::string color_In, std::string condition_In, std::string used_condition_In) {
  category = category_In;
  inventory_num = inventory_num_In; 
@@ -45,15 +55,14 @@ volatile void Item::Print_Item(void) const {
 
 }
 
-User_Item::User_Item(std::vector<std::string> misc_names_In, std::vector<std::string> misc_values_In) 
-						: Item() {
+User_Item::User_Item(std::string category_In, std::vector<std::string> misc_names_In, std::vector<std::string> misc_values_In) 
+						: Item(category_In) {
 
  misc_names = misc_names_In;
  misc_values = misc_values_In;
 }
 
 void User_Item::Print_Item(void) const {
-
 
 }
 
@@ -76,8 +85,6 @@ void Electronic::Print_Item(void) const {
   			<< std::left << std::setw(11) << used_condition  
   			<< "\n"  /*End row 3*/
   			<< std::right << std::setw(30) <<  "Model: " << std::left << std::setw(11) << model << std::endl;
-
-
 }
 
 Furniture::Furniture(std::string category_In, std::string inventory_num_In, std::string price_In, std::string id_num_In, std::string color_In, std::string condition_In, std::string used_condition_In, 

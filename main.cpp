@@ -31,6 +31,9 @@ int main() {
 
  clothing_items[0].Print_Item();
  std::cout << "\n\n";
+
+ user_items[0].Print_Item();
+ std::cout << "\n\n";
  
  return 0;
 }

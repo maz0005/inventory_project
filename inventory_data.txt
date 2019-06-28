@@ -66,4 +66,10 @@ Cotton
 Polyester
 15
 end_materials
+User Item
+Category
+Writing Utensils
+Type
+Pen
+end_user_item
 end_all_items

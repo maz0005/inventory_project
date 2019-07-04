@@ -6,7 +6,6 @@
 #define INVENTORY_ITEMS_H
 
 
-
 class Item {
 protected:
 	std::string category;

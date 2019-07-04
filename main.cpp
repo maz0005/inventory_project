@@ -16,6 +16,8 @@ int main() {
 
  /*Startup the system. This deals with login if needed*/
  Startup_Handler(user_name, password, user_items, electronic_items, furniture_items, clothing_items, book_items);
+
+ if (!user_name.empty()) { Login_Handler(user_name, password); };
  
  electronic_items[0].Print_Item();
  std::cout << "\n\n";

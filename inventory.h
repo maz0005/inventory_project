@@ -2,6 +2,8 @@
 #include <string>
 #include <fstream>
 #include <vector>
+#include <unistd.h>
+#include <termios.h>
 
 #ifndef INVENTORY_H
 #define INVENTORY_H
@@ -17,9 +19,8 @@ enum DISPLAY_FILTER {KEYWORD = 0, CATEGORY = 1, BRAND = 2, INV_NUM = 3};
 @param user_name_In Username used for login
 @param password Password used for login
 @param &vector<User_Item>, &vector<Electronic>, &vector<Furniture>, &vector<Clothing>, &vector<Book> vectors you want items stored in.
-@return Return 0 when done retrieving all items. Return 1 if no previously saved data
 */
-int Startup_Handler(std::string &user_name_In, std::string &password_In, std::vector<User_Item> &user_items_In, std::vector<Electronic> &electronic_items_In, 
+void Startup_Handler(std::string &user_name_In, std::string &password_In, std::vector<User_Item> &user_items_In, std::vector<Electronic> &electronic_items_In, 
 	std::vector<Furniture> &furniture_items_In, std::vector<Clothing> &clothing_items_In, std::vector<Book> &book_items_In);
 
 /**
@@ -50,6 +51,6 @@ double New_Inv_Number(void);
 */
 void Save_System(void);
 
-void Login(std::string user_name_In, std::string password_In);
+void Login_Handler(std::string user_name_In, std::string password_In);
 
 #endif

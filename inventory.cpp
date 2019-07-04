@@ -5,7 +5,7 @@
 #include <vector>
 
 
-int Startup_Handler(std::string &user_name_In, std::string &password_In, std::vector<User_Item> &user_items_In, std::vector<Electronic> &electronic_items_In, 
+void Startup_Handler(std::string &user_name_In, std::string &password_In, std::vector<User_Item> &user_items_In, std::vector<Electronic> &electronic_items_In, 
 	std::vector<Furniture> &furniture_items_In, std::vector<Clothing> &clothing_items_In, std::vector<Book> &book_items_In) {
 
  std::string data[14];
@@ -26,7 +26,7 @@ int Startup_Handler(std::string &user_name_In, std::string &password_In, std::ve
 
  getline(input_file, temp);
 
- if(!temp.compare("no_saved_data\0")) return 1;
+ if(!temp.compare("no_saved_data\0")) return;
 
  if(temp.compare("end_username_password\0")) { /*Will return 0 if both equal. Means no username or password at this point in text file so won't enter*/
  		user_name_In = temp;
@@ -99,7 +99,6 @@ int Startup_Handler(std::string &user_name_In, std::string &password_In, std::ve
 
  input_file.close();
 
- return 0;
 }
 
 
@@ -127,6 +126,70 @@ void Save_System(void){
 
 }
 
-void Login(std::string user_name_In, std::string password_In) {
+int getch() {
+    int ch;
+    struct termios t_old, t_new;
+
+    tcgetattr(STDIN_FILENO, &t_old);
+    t_new = t_old;
+    t_new.c_lflag &= ~(ICANON | ECHO);
+    tcsetattr(STDIN_FILENO, TCSANOW, &t_new);
+
+    ch = getchar();
+
+    tcsetattr(STDIN_FILENO, TCSANOW, &t_old);
+    return ch;
+}
+
+
+
+std::string getpass(const char *prompt, bool show_asterisk=true)
+{
+  const char BACKSPACE = 127;
+  const char RETURN = 10;
+
+  std::string password;
+  unsigned char ch = 0;
+
+  std::cout << prompt;
+
+  while((ch=getch())!=RETURN)
+    {
+       if(ch == BACKSPACE)
+         {
+            if(password.length()!=0)
+              {
+                 if(show_asterisk)
+                 std::cout <<"\b \b";
+                 password.resize(password.length()-1);
+              }
+         }
+       else
+         {
+             password += ch;
+             if(show_asterisk)
+                 std::cout <<'*';
+         }
+    }
+  std::cout << std::endl;
+  return password;
+}
+
+
+void Login_Handler(std::string user_name_In, std::string password_In) {
+ std::string user_name;
+ std::string password;
+ 
+ while(1) {
+ 		user_name.clear();
+ 		password.clear();
+
+ 		std::cout << "Username: ";
+ 		getline(std::cin, user_name);
+ 		password= getpass("Password: ", true);
+
+ 		if ((user_name.compare(user_name_In)) || (password.compare(password_In))) std::cout  << "Invalid user name or password" << std::endl;
+ 		else break;
+ } 
 
 }

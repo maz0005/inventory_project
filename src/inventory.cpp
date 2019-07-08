@@ -5,7 +5,7 @@
 #include <vector>
 
 
-void Startup_Handler(std::string &user_name_In, std::string &password_In, std::vector<User_Item> &user_items_In, std::vector<Electronic> &electronic_items_In, 
+void Startup_Handler(std::string &user_name_In, std::string &password_In, std::string &title_In, std::vector<User_Item> &user_items_In, std::vector<Electronic> &electronic_items_In, 
 	std::vector<Furniture> &furniture_items_In, std::vector<Clothing> &clothing_items_In, std::vector<Book> &book_items_In) {
 
  std::string data[14];
@@ -25,12 +25,18 @@ void Startup_Handler(std::string &user_name_In, std::string &password_In, std::v
  }
 
  getline(input_file, temp);
-
- if(!temp.compare("no_saved_data\0")) return;
+ if(!temp.compare("no_saved_data\0")) return; /*First boot up. No previously saved data.*/
 
  if(temp.compare("end_username_password\0")) { /*Will return 0 if both equal. Means no username or password at this point in text file so won't enter*/
  		user_name_In = temp;
  		getline(input_file, password_In);
+	 	getline(input_file, temp); /*Remove 'end_username_password' from stream*/
+ }
+	
+ getline(input_file, temp);	
+ if(temp.compare("end_title\0")) {  /*Will return 0 if no title at this point.*/
+	 	title_In = temp;
+	 	getline(input_file, temp); /*Remove 'end_title from stream'*/
  }
 
  getline(input_file, temp);
@@ -56,7 +62,7 @@ void Startup_Handler(std::string &user_name_In, std::string &password_In, std::v
 
  		else { /*Check if item is one of the hardcoded items*/
  				data[0] = temp;
- 				for (int i = 1; i < 7; i++) { getline(input_file, data[i]); } 
+ 				for (int i = 1; i < 7; i++) { getline(input_file, data[i]); } /*Get common memebers among all objects*/
         
  				if (!temp.compare("Electronic\0")) {
  						for (int i = 7; i < 10; i++) { getline(input_file, data[i]); }

@@ -1,7 +1,7 @@
 CC = g++
 CFLAGS = -g
 OBJFILES = inventory_items.o inventory.o main.o
-TARGET = inventory
+TARGET = bin/inventory
 
 all: inventory
 

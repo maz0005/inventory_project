@@ -5,7 +5,7 @@
 #include <vector>
 
 
-void Startup_Handler(std::string &user_name_In, std::string &password_In, std::string &title_In, std::vector<User_Item> &user_items_In, std::vector<Electronic> &electronic_items_In, 
+void Startup_Handler(const std::string &file_name_In, std::string &user_name_In, std::string &password_In, std::string &title_In, std::vector<User_Item> &user_items_In, std::vector<Electronic> &electronic_items_In, 
 	std::vector<Furniture> &furniture_items_In, std::vector<Clothing> &clothing_items_In, std::vector<Book> &book_items_In) {
 
  std::string data[14];
@@ -17,7 +17,7 @@ void Startup_Handler(std::string &user_name_In, std::string &password_In, std::s
  std::string temp2;
 
  std::ifstream input_file;
- input_file.open("inventory_data.txt");
+ input_file.open(file_name_In);
 
  if(input_file.fail()) { 
  	std::cout << "Error with file: inventory_file\n" << std::endl; 

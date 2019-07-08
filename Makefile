@@ -5,7 +5,7 @@ TARGET = bin/inventory
 
 all: inventory
 
-inventory: inventory_items.o inventory.o main.o
+inventory: $(OBJFILES)
 	$(CC) $(OBJFILES) -o $(TARGET)
 
 inventory_items.o: inventory_items.cpp

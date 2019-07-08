@@ -8,7 +8,7 @@
 void Startup_Handler(const std::string &file_name_In, std::string &user_name_In, std::string &password_In, std::string &title_In, std::vector<User_Item> &user_items_In, std::vector<Electronic> &electronic_items_In, 
 	std::vector<Furniture> &furniture_items_In, std::vector<Clothing> &clothing_items_In, std::vector<Book> &book_items_In) {
 
- std::string data[14];
+ std::string data[14]; /*Where data will be stored to instantiate objects*/
  std::vector<std::string> misc_names;
  std::vector<std::string> misc_values;
  std::vector<std::string> materials;
@@ -28,7 +28,7 @@ void Startup_Handler(const std::string &file_name_In, std::string &user_name_In,
  if(!temp.compare("no_saved_data\0")) return; /*First boot up. No previously saved data.*/
 
  if(temp.compare("end_username_password\0")) { /*Will return 0 if both equal. Means no username or password at this point in text file so won't enter*/
- 		user_name_In = temp;
+	 	user_name_In = temp;
  		getline(input_file, password_In);
 	 	getline(input_file, temp); /*Remove 'end_username_password' from stream*/
  }
@@ -40,7 +40,6 @@ void Startup_Handler(const std::string &file_name_In, std::string &user_name_In,
  }
 
  getline(input_file, temp);
-
  while(temp.compare("end_all_items\0")) {
 
   		if (!temp.compare("User Item\0")) { /*Check if user created a specific item*/
@@ -104,6 +103,7 @@ void Startup_Handler(const std::string &file_name_In, std::string &user_name_In,
  }
 
  input_file.close();
+ for (int i = 0; i < 10000; i++); /*Make sure file closes before returning*/
 
 }
 
@@ -182,20 +182,37 @@ std::string getpass(const char *prompt, bool show_asterisk=true)
 }
 
 
-void Login_Handler(std::string user_name_In, std::string password_In) {
+void Login_Handler(const std::string &file_name_In) {
+ std::ifstream input_file;
+ input_file.open(file_name_In);
+
+ if(input_file.fail()) { 
+ 	std::cout << "Error with file: inventory_file\n" << std::endl; 
+ 	exit(1);
+ }
+	
  std::string user_name;
  std::string password;
+	
+ getline(file_name_In, user_name);
+ if(!user_name.compare("end_username_password")) return; /*No login required. Else continue*/
  
+ getline(file_name_In, password);
+ std::string user_name_2;
+ std::string password_2;
  while(1) {
- 		user_name.clear();
- 		password.clear();
+ 		user_name_2.clear();
+ 		password_2.clear();
 
  		std::cout << "Username: ";
- 		getline(std::cin, user_name);
- 		password= getpass("Password: ", true);
+ 		getline(std::cin, user_name_2);
+ 		password_2 = getpass("Password: ", true);
 
- 		if ((user_name.compare(user_name_In)) || (password.compare(password_In))) std::cout  << "Invalid user name or password" << std::endl;
+ 		if ((user_name_2.compare(user_name)) || (password_2.compare(password))) std::cout  << "Invalid user name or password" << std::endl;
  		else break;
  } 
+
+ input_file.close();
+ for (int i = 0; i < 10000; i++); /*Make sure file closes before returning*/
 
 }

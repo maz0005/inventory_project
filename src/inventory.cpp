@@ -39,6 +39,7 @@ void Startup_Handler(const std::string &file_name_In, std::string &user_name_In,
 	 	getline(input_file, temp); /*Remove 'end_title from stream'*/
  }
 
+ std::cout << "Loading system...\n" << std::endl;
  getline(input_file, temp);
  while(temp.compare("end_all_items\0")) {
 
@@ -103,6 +104,7 @@ void Startup_Handler(const std::string &file_name_In, std::string &user_name_In,
  }
 
  input_file.close();
+ std::cout << "Bootup successful\n" << std::endl;
  for (int i = 0; i < 10000; i++); /*Make sure file closes before returning*/
 
 }

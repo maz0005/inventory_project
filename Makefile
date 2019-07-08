@@ -1,5 +1,5 @@
 CC := g++
-CFLAGS := -g
+CFLAGS := -Wall -g
 OBJFILES := inventory_items.o inventory.o main.o
 TARGET := bin/inventory
 

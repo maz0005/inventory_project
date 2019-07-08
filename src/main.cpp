@@ -16,10 +16,11 @@ int main() {
  std::string title;
  std::string file_name = "inventory_data.txt";
 
- /*Startup the system. This deals with login if needed*/
+ /*Handle Login if needed*/
+ Login_Handler(file_name);
+ 
+ /*Startup the system. Retreive saved data*/
  Startup_Handler(file_name, user_name, password, title, user_items, electronic_items, furniture_items, clothing_items, book_items);
-
- if (!user_name.empty()) { Login_Handler(user_name, password); };
  
  electronic_items[0].Print_Item();
  std::cout << "\n\n";

@@ -4,6 +4,8 @@
 #include <fstream>
 #include <vector>
 
+#define INV_MAX 10000
+bool FULL = 0; /*Set to 1 when inventory full*/
 
 void Startup_Handler(const std::string &file_name_In, std::string &user_name_In, std::string &password_In, std::string &title_In, std::vector<User_Item> &user_items_In, std::vector<Electronic> &electronic_items_In, 
 	std::vector<Furniture> &furniture_items_In, std::vector<Clothing> &clothing_items_In, std::vector<Book> &book_items_In) {
@@ -177,6 +179,26 @@ void Change_User_Password(void) {
 
 void Manage_Acc_Items(void) {
 
+}
+
+double New_Inv_Number(bool* array_In) {
+ static double num = 0;
+ static double next_num = 1;
+	
+ if (FULL) {
+ 		
+ }
+ num = next_num;
+ if (next_num == (INV-MAX - 1)) next_num = 0; /*Circular buffer*/
+	
+ while(1) { /*Get next inventory number before returning*/
+ 		if (!array_In[next_num]) { /*See if index value is FALSE. Sets next index*/
+				return num;
+		}
+	 
+ 		 
+ }
+ 	 
 }
 
 void Save_System(void){

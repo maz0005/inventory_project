@@ -1,4 +1,4 @@
-#include "inventory_items.h"
+#include "../include/inventory_items.h"
 #include <fstream>
 #include <string>
 #include <vector>

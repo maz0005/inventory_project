@@ -20,7 +20,7 @@ enum DISPLAY_FILTER {KEYWORD = 0, CATEGORY = 1, BRAND = 2, INV_NUM = 3};
 @param password Password used for login
 @param &vector<User_Item>, &vector<Electronic>, &vector<Furniture>, &vector<Clothing>, &vector<Book> vectors you want items stored in.
 */
-void Startup_Handler(std::string &user_name_In, std::string &password_In, std::vector<User_Item> &user_items_In, std::vector<Electronic> &electronic_items_In, 
+void Startup_Handler(std::string &user_name_In, std::string &password_In, std::string &title_In, std::vector<User_Item> &user_items_In, std::vector<Electronic> &electronic_items_In, 
 	std::vector<Furniture> &furniture_items_In, std::vector<Clothing> &clothing_items_In, std::vector<Book> &book_items_In);
 
 /**

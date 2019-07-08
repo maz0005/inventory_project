@@ -1,8 +1,8 @@
 
 #include <fstream>
 #include <iostream>
-#include "inventory_items.h"
-#include "inventory.h"
+#include "../include/inventory_items.h"
+#include "../include/inventory.h"
 
 
 int main() {

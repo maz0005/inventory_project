@@ -1,11 +1,12 @@
-CC = g++
-CFLAGS = -g
-OBJFILES = inventory_items.o inventory.o main.o
-TARGET = bin/inventory
+CC := g++
+CFLAGS := -g
+OBJFILES := inventory_items.o inventory.o main.o
+TARGET := bin/inventory
 
 all: inventory
 
 inventory: $(OBJFILES)
+	@echo " Linking...";
 	$(CC) $(OBJFILES) -o $(TARGET)
 
 inventory_items.o: inventory_items.cpp
@@ -18,4 +19,5 @@ main.o: main.cpp
 	$(CC) (CFLAGS) -c main.cpp
 
 clean:
+	@echo " Cleaning...";
 	rm -r *o $(TARGET)

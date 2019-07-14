@@ -7,8 +7,9 @@
 #define INV_MAX 10000
 bool FULL = 0; /*Set to 1 when inventory full*/
 
-void Startup_Handler(const std::string &file_name_In, std::string &user_name_In, std::string &password_In, std::string &title_In, std::vector<User_Item> &user_items_In, std::vector<Electronic> &electronic_items_In, 
-	std::vector<Furniture> &furniture_items_In, std::vector<Clothing> &clothing_items_In, std::vector<Book> &book_items_In) {
+void Startup_Handler(const std::string &file_name_In, std::string &user_name_In, std::string &password_In, std::string &title_In, double biggest_index_In, 
+		     bool* &inventory_numbers_In, std::vector<User_Item> &user_items_In, std::vector<Electronic> &electronic_items_In, std::vector<Furniture> &furniture_items_In, 
+		     std::vector<Clothing> &clothing_items_In, std::vector<Book> &book_items_In) {
 
  std::string data[14]; /*Where data will be stored to instantiate objects*/
  std::vector<std::string> misc_names;
@@ -40,13 +41,20 @@ void Startup_Handler(const std::string &file_name_In, std::string &user_name_In,
 	 	title_In = temp;
 	 	getline(input_file, temp); /*Remove 'end_title from stream'*/
  }
-
+ 	
+ /*Allocate memory for index numbers*/
+ getline(input_file, temp);
+ biggest_index_In = std::stod(temp, NULL);
+ if (bigges_index_In < 10000) { inventory_numbers_In = malloc(sizeof(bool) * 10000); }
+ else { inventory_numbers_In = malloc (sizeof(bool) * biggest_index_In); }
+ 	
  std::cout << "Loading system...\n" << std::endl;
  getline(input_file, temp);
  while(temp.compare("end_all_items\0")) {
 
   		if (!temp.compare("User Item\0")) { /*Check if user created a specific item*/
- 	
+ 				getline(input_file, data[0]); Get inventory number
+				inventory_numbers_In[stod(data[0], NULL)] = true;
  				getline(input_file, temp2);
  				do {
  						misc_names.push_back(temp2);
@@ -56,7 +64,7 @@ void Startup_Handler(const std::string &file_name_In, std::string &user_name_In,
 
  				} while(temp2.compare("end_user_item\0"));
 
- 				User_Item item = User_Item(temp, misc_names, misc_values);
+ 				User_Item item = User_Item(temp, data[0], misc_names, misc_values);
  				user_items_In.push_back(item);
  				misc_names.clear();
  				misc_values.clear();
@@ -64,8 +72,8 @@ void Startup_Handler(const std::string &file_name_In, std::string &user_name_In,
 
  		else { /*Check if item is one of the hardcoded items*/
  				data[0] = temp;
- 				for (int i = 1; i < 7; i++) { getline(input_file, data[i]); } /*Get common memebers among all objects*/
-        
+ 				for (int i = 1; i < 7; i++) { getline(input_file, data[i]); } /*Get common members amongst all objects*/
+        			inventory_number_In[stod(data[1], null)] = true; /*Set index as taken*/
  				if (!temp.compare("Electronic\0")) {
  						for (int i = 7; i < 10; i++) { getline(input_file, data[i]); }
  						Electronic item = Electronic(data[0], data[1], data[2], data[3], data[4], data[5], data[6], data[7], data[8], data[9]);

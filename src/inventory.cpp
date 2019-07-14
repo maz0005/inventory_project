@@ -7,8 +7,7 @@
 #define INV_MAX 10000
 bool FULL = 0; /*Set to 1 when inventory full*/
 
-void Startup_Handler(const std::string &file_name_In, std::string &user_name_In, std::string &password_In, std::string &title_In, double biggest_index_In, 
-		     bool* &inventory_numbers_In, std::vector<User_Item> &user_items_In, std::vector<Electronic> &electronic_items_In, std::vector<Furniture> &furniture_items_In, 
+void Startup_Handler(const std::string &file_name_In, std::string &user_name_In, std::string &password_In, std::string &title_In, Dynamic_Array &inventory_numbers_In, std::vector<User_Item> &user_items_In, std::vector<Electronic> &electronic_items_In, std::vector<Furniture> &furniture_items_In, 
 		     std::vector<Clothing> &clothing_items_In, std::vector<Book> &book_items_In) {
 
  std::string data[14]; /*Where data will be stored to instantiate objects*/
@@ -44,9 +43,9 @@ void Startup_Handler(const std::string &file_name_In, std::string &user_name_In,
  	
  /*Allocate memory for index numbers*/
  getline(input_file, temp);
- biggest_index_In = std::stod(temp, NULL);
- if (bigges_index_In < 10000) { inventory_numbers_In = malloc(sizeof(bool) * 10000); }
- else { inventory_numbers_In = malloc (sizeof(bool) * biggest_index_In); }
+ inventory_numbers_In.size = std::stod(temp, NULL);
+ if (inventory_numbers_In.size < 9999) { inventory_numbers_In.pointer = malloc(sizeof(bool) * 10000); }
+ else { inventory_numbers_In.pointer = malloc (sizeof(bool) * inventory_numbers_In.size); }
  	
  std::cout << "Loading system...\n" << std::endl;
  getline(input_file, temp);

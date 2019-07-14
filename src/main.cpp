@@ -34,7 +34,7 @@ int main() {
  				while(1) {
  						std::cout << "Enter one of the available options and press enter: ";
  						getline(std::cin, input);
-       /*Call the appropriate handler*/
+       /*Call a specific handler*/
  						if (!input.compare("1\0"));
  						else if (!input.compare("2\0"));
  						else if (!input.compare("3\0"));

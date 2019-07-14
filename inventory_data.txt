@@ -3,6 +3,7 @@ password
 end_username_password
 This is where title will go
 end_title
+7689
 Electronic
 12
 300.00
@@ -71,6 +72,7 @@ Polyester
 15
 end_materials
 User Item
+7689
 Category
 Writing Utensils
 Type

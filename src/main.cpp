@@ -21,7 +21,7 @@ int main() {
  /*Handle Login if needed*/
  Login_Handler(file_name);
  
- /*Startup the system. Retreive saved data*/
+ /*Startup the system. Retrieve saved data*/
  Startup_Handler(file_name, user_name, password, title, biggest_index, inventory_numbers,
                  user_items, electronic_items, furniture_items, clothing_items, book_items);
  

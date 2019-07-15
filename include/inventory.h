@@ -13,6 +13,9 @@ enum DISPLAY_OPTION {MAIN_MENU = 0, INVENTORY = 1, INV_OPTION = 2, ACCEPTABLE = 
 
 enum DISPLAY_FILTER {KEYWORD = 0, CATEGORY = 1, BRAND = 2, INV_NUM = 3};
 
+/**
+@brief Dynamic array that will change its size frequently
+*/
 struct Dynamic_Array {
 bool* pointer;
 double size;

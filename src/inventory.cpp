@@ -188,6 +188,7 @@ void Manage_Acc_Items(void) {
 }
 
 double New_Inv_Number(Dynamic_Array array_In) {
+ double temp_number; /*Hold previous size in case more memory has to be allocated*/
 
  for(int i = 0; i < (array_In.size - 1); i++) {/*Change this later. Use algorithm to find a NULL or available spot faster*/
  		if (array_In.pointer[i] == NULL || !array_In.pointer[i]) {
@@ -199,6 +200,7 @@ double New_Inv_Number(Dynamic_Array array_In) {
  /*No number available. Allocate more memory*/
  try {
  		array_In.pointer = (bool *) realloc(array_In.pointer, (sizeof(bool) * (array_In.size * 2))); /*Double the size*/
+	 	temp_number = array_In.size; /*More space now available. Hold next available number to return*/
 	 	array_In.size = array_In.size * 2;
  }
  
@@ -206,7 +208,8 @@ double New_Inv_Number(Dynamic_Array array_In) {
  		std::cout << "Error allocating more memory for inventory numbers. Program terminating" << std::endl;
 	 	exit(0);
  }
- 
+	
+ return temp_number;
 }
 
 void Save_System(void){

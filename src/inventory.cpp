@@ -4,7 +4,6 @@
 #include <fstream>
 #include <vector>
 
-#define INV_MAX 10000
 bool FULL = 0; /*Set to 1 when inventory full*/
 
 void Startup_Handler(const std::string &file_name_In, std::string &user_name_In, std::string &password_In, std::string &title_In, Dynamic_Array &inventory_numbers_In, std::vector<User_Item> &user_items_In, std::vector<Electronic> &electronic_items_In, std::vector<Furniture> &furniture_items_In, 
@@ -123,9 +122,9 @@ void Display_Menu(DISPLAY_OPTION option_In) {
  switch (option_In) {
 
     case MAIN_MENU:
-        std::cout << "***********************************************************************************************************\n"
-                  << "*                                                Main Menu                                                *\n"
-                  << "***********************************************************************************************************\n"
+        std::cout << "*************************************************************************************************************\n"
+                  << "*                                                 Main Menu                                                 *\n"
+                  << "*************************************************************************************************************\n"
                   << "(1) View/Edit Inventory\n"
                   << "(2) Manage Acceptable Items\n"
                   << "(3) Change Username/Password\n"
@@ -134,9 +133,9 @@ void Display_Menu(DISPLAY_OPTION option_In) {
     break;
 
     case INVENTORY:
-        std::cout << "***********************************************************************************************************\n"
-                  << "*                                               Inventory Page                                            *\n"
-                  << "***********************************************************************************************************\n"
+        std::cout << "*************************************************************************************************************\n"
+                  << "*                                                Inventory Page                                             *\n"
+                  << "*************************************************************************************************************\n"
                   << "(1) Display Entire Inventor\n"
                   << "(2) Display by Option\n"
                   << "(3) Manage Prices\n"
@@ -146,9 +145,9 @@ void Display_Menu(DISPLAY_OPTION option_In) {
     break;
 
     case INV_OPTION:
-        std::cout << "***********************************************************************************************************\n"
-                  << "*                                               Inventory Page                                            *\n"
-                  << "***********************************************************************************************************\n"
+        std::cout << "*************************************************************************************************************\n"
+                  << "*                                                Inventory Page                                             *\n"
+                  << "*************************************************************************************************************\n"
                   << "(1) Keyword\n"
                   << "(2) Category\n"
                   << "(3) Brand\n"
@@ -157,9 +156,9 @@ void Display_Menu(DISPLAY_OPTION option_In) {
     break;
 
     case ACCEPTABLE:
-        std::cout << "***********************************************************************************************************\n"
-                  << "*                                            Acceptable Items Page                                        *\n"
-                  << "***********************************************************************************************************\n"
+        std::cout << "*************************************************************************************************************\n"
+                  << "*                                             Acceptable Items Page                                         *\n"
+                  << "*************************************************************************************************************\n"
                   << "(1) Display Acceptable Items" 
                   << "(2) Add Acceptable Items"
                   << "(3) Remove Acceptable Items"
@@ -188,24 +187,26 @@ void Manage_Acc_Items(void) {
 
 }
 
-double New_Inv_Number(bool* array_In) {
- static double num = 0;
- static double next_num = 1;
-	
- if (FULL) {
- 		
- }
- num = next_num;
- if (next_num == (INV-MAX - 1)) next_num = 0; /*Circular buffer*/
-	
- while(1) { /*Get next inventory number before returning*/
- 		if (!array_In[next_num]) { /*See if index value is FALSE. Sets next index*/
-				return num;
+double New_Inv_Number(Dynamic_Array array_In) {
+
+ for(int i = 0; i < (array_In.size - 1); i++) {/*Change this later. Use algorithm to find a NULL or available spot faster*/
+ 		if (array_In.pointer[i] == NULL || !array_In.pointer[i]) {
+				array_In.pointer[i] = true;
+				return i; /*Return inventory number*/
 		}
-	 
- 		 
  }
- 	 
+	
+ /*No number available. Allocate more memory*/
+ try {
+ 		array_In.pointer = (bool *) realloc(array_In.pointer, (sizeof(bool) * (array_In.size * 2))); /*Double the size*/
+	 	array_In.size = array_In.size * 2;
+ }
+ 
+ catch {
+ 		std::cout << "Error allocating more memory for inventory numbers. Program terminating" << std::endl;
+	 	exit(0);
+ }
+ 
 }
 
 void Save_System(void){

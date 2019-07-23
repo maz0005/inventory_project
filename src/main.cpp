@@ -15,7 +15,7 @@ int main() {
  std::string password;
  std::string title;
  std::string input;
- double biggest_index = 10000;
+ Dynamic_Array inventory_numbers;
  std::string file_name = "inventory_data.txt";
   
  /*Handle Login if needed*/
@@ -30,7 +30,7 @@ int main() {
  		std::cout << "Enter one of the available options and press enter: ";
  		getline(std::cin, input);
   
- 		if (!input.compare("1\0")) {
+ 		if (!input.compare("1\0")) { /*View/Edit Inventory*/
  				while(1) {
  						std::cout << "Enter one of the available options and press enter: ";
  						getline(std::cin, input);
@@ -38,24 +38,33 @@ int main() {
  						if (!input.compare("1\0"));
  						else if (!input.compare("2\0"));
  						else if (!input.compare("3\0"));
- 						else if (!input.compare("4\0")) break;
+ 						else if (!input.compare("4\0"));
+       else if (!input.compare("5\0"));
+      	else if (!input.compare("6\0")) break;
  						else std::cout << "Please enter a valid option\n" std::endl;
  				}
  		}
 
- 		else if (!input.compare("2\0")) {
+ 		else if (!input.compare("2\0")) { /*Manage Acceptable Items*/
+     while(1) {
+       /*Call a specific handler*/
+ 						if (!input.compare("1\0"));
+ 						else if (!input.compare("2\0"));
+ 						else if (!input.compare("3\0"));
+ 						else if (!input.compare("4\0")) break;
+ 						else std::cout << "Please enter a valid option\n" std::endl;
+     }
+ 		}
+
+ 		else if (!input.compare("3\0")) { /*Change Username/Password*/
  			
  		}
 
- 		else if (!input.compare("3\0")) {
+ 		else if (!input.compare("4\0")) { /*Change Company Name*/
  			
  		}
 
- 		else if (!input.compare("4\0")) {
- 			
- 		}
-
- 		else if (!input.compare("5\0")) {
+ 		else if (!input.compare("5\0")) { /*Exit*/
  				exit(1);	
  		}
 

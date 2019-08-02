@@ -190,7 +190,7 @@ void Manage_Acc_Items(void) {
 double New_Inv_Number(Dynamic_Array array_In) {
  double temp_number; /*Hold previous size in case more memory has to be allocated*/
 
- for(int i = 0; i < (array_In.size - 1); i++) {/*Change this later. Use algorithm (DFS) to find a NULL or available spot faster*/
+ for(int i = 0; i < (array_In.size - 1); i++) { /*Find next available inventory number*/
  		if (array_In.pointer[i] == NULL || !array_In.pointer[i]) {
 				array_In.pointer[i] = true;
 				return i; /*Return inventory number*/

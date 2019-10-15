@@ -43,16 +43,16 @@ void Startup_Handler(const std::string &file_name_In, std::string &user_name_In,
  /*Allocate memory for index numbers*/
  getline(input_file, temp);
  inventory_numbers_In.size = std::stod(temp, NULL);
- if (inventory_numbers_In.size < 9999) { inventory_numbers_In.pointer = malloc(sizeof(bool) * 10000); }
- else { inventory_numbers_In.pointer = malloc (sizeof(bool) * inventory_numbers_In.size); }
+ if (inventory_numbers_In.size < 9999) { inventory_numbers_In.pointer = (bool *) malloc(sizeof(bool) * 10000); }
+ else { inventory_numbers_In.pointer = (bool *) malloc (sizeof(bool) * inventory_numbers_In.size); }
  	
  std::cout << "Loading system...\n" << std::endl;
- getline(input_file, temp);
+ getline(input_file, temp); /*Get inventory type*/
  while(temp.compare("end_all_items\0")) {
 
   		if (!temp.compare("User Item\0")) { /*Check if user created a specific item*/
- 				getline(input_file, data[0]); Get inventory number
-				inventory_numbers_In[stod(data[0], NULL)] = true;
+ 				getline(input_file, data[0]); /*Get inventory number*/
+				inventory_numbers_In.pointer[std::stoul(data[0], NULL)] = true;
  				getline(input_file, temp2);
  				do {
  						misc_names.push_back(temp2);
@@ -62,7 +62,7 @@ void Startup_Handler(const std::string &file_name_In, std::string &user_name_In,
 
  				} while(temp2.compare("end_user_item\0"));
 
- 				User_Item item = User_Item(temp, data[0], misc_names, misc_values);
+ 				User_Item item = User_Item(temp, misc_names, misc_values);
  				user_items_In.push_back(item);
  				misc_names.clear();
  				misc_values.clear();
@@ -70,28 +70,28 @@ void Startup_Handler(const std::string &file_name_In, std::string &user_name_In,
 
  		else { /*Check if item is one of the hardcoded items*/
  				data[0] = temp;
- 				for (int i = 1; i < 7; i++) { getline(input_file, data[i]); } /*Get common members amongst all objects*/
-        			inventory_number_In[stod(data[1], null)] = true; /*Set index as taken*/
+ 				for (int i = 1; i < 7; i++) getline(input_file, data[i]); /*Get common members amongst all objects*/
+        inventory_numbers_In.pointer[stoul(data[1], NULL)] = true; /*Set index as taken*/
  				if (!temp.compare("Electronic\0")) {
- 						for (int i = 7; i < 10; i++) { getline(input_file, data[i]); }
+ 						for (int i = 7; i < 10; i++) getline(input_file, data[i]); 
  						Electronic item = Electronic(data[0], data[1], data[2], data[3], data[4], data[5], data[6], data[7], data[8], data[9]);
  						electronic_items_In.push_back(item);
  				}
 
  				else if (!temp.compare("Book\0")) {
- 						for (int i = 7; i < 12; i++) { getline(input_file, data[i]); }
+ 						for (int i = 7; i < 12; i++) getline(input_file, data[i]); 
  						Book item = Book(data[0], data[1], data[2], data[3], data[4], data[5], data[6], data[7], data[8], data[9], data[10], data[11]);
  						book_items_In.push_back(item);
  				}
 
  				else if (!temp.compare("Furniture\0")) {
- 						for (int i = 7; i < 14; i++) { getline(input_file, data[i]); }
+ 						for (int i = 7; i < 14; i++) getline(input_file, data[i]); 
  						Furniture item = Furniture(data[0], data[1], data[2], data[3], data[4], data[5], data[6], data[7], data[8], data[9], data[10], data[11], data[12], data[13]);
  						furniture_items_In.push_back(item);
  				}
 
   				else if (!temp.compare("Clothing\0")) {
- 						for (int i = 7; i < 12; i++) { getline(input_file, data[i]); }
+ 						for (int i = 7; i < 12; i++) getline(input_file, data[i]);
  						
  						getline(input_file, temp);
  						while(temp.compare("end_materials\0")) {
@@ -165,7 +165,8 @@ void Display_Menu(DISPLAY_OPTION option_In) {
                   << "(4) Return to Main Menu" << std::endl;
     break;
 
-    default;
+    default:
+    break;
 
  }
 
@@ -187,11 +188,10 @@ void Manage_Acc_Items(void) {
 
 }
 
-double New_Inv_Number(Dynamic_Array array_In) {
- double temp_number; /*Hold previous size in case more memory has to be allocated*/
-
- for(int i = 0; i < (array_In.size - 1); i++) { /*Find next available inventory number*/
- 		if (array_In.pointer[i] == NULL || !array_In.pointer[i]) {
+unsigned long int New_Inv_Number(Dynamic_Array array_In) {
+unsigned int previous_size = array_In.size; /*More space now available. Hold next available number to return*/
+ for(unsigned long int i = 0; i < (array_In.size - 1); i++) { /*Find next available inventory number*/
+ 		if (!array_In.pointer[i]) {
 				array_In.pointer[i] = true;
 				return i; /*Return inventory number*/
 		}
@@ -200,16 +200,16 @@ double New_Inv_Number(Dynamic_Array array_In) {
  /*No number available. Allocate more memory*/
  try {
  		array_In.pointer = (bool *) realloc(array_In.pointer, (sizeof(bool) * (array_In.size * 2))); /*Double the size*/
-	 	temp_number = array_In.size; /*More space now available. Hold next available number to return*/
+	 	
 	 	array_In.size = array_In.size * 2;
  }
  
- catch {
+ catch (...) {
  		std::cout << "Error allocating more memory for inventory numbers. Program terminating" << std::endl;
 	 	exit(0);
  }
 	
- return temp_number;
+ return previous_size;
 }
 
 void Save_System(void){
@@ -278,10 +278,10 @@ void Login_Handler(const std::string &file_name_In) {
  std::string user_name;
  std::string password;
 	
- getline(file_name_In, user_name);
+ std::getline(input_file, user_name);
  if(!user_name.compare("end_username_password")) return; /*No login required. Else continue*/
  
- getline(file_name_In, password);
+ std::getline(input_file, password);
  std::string user_name_2;
  std::string password_2;
  while(1) {
@@ -289,7 +289,7 @@ void Login_Handler(const std::string &file_name_In) {
  		password_2.clear();
 
  		std::cout << "Username: ";
- 		getline(std::cin, user_name_2);
+ 		std::getline(std::cin, user_name_2);
  		password_2 = getpass("Password: ", true);
 
  		if ((user_name_2.compare(user_name)) || (password_2.compare(password))) std::cout  << "Invalid user name or password" << std::endl;

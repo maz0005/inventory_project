@@ -142,7 +142,7 @@ void Clothing::Print_Item(void) const {
         << used_condition << std::right << std::setw(12) << "Materials: ";
         if (!materials.empty()) {
             std::cout << "{";
-            for (int i = 0; i < materials.size(); i++) {
+            for (unsigned int i = 0; i < materials.size(); i++) {
                 std::cout << materials[i] << "," << material_percentages[i];
                 if ((i + 1) != materials.size()) std::cout << ' ';
             }

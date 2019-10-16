@@ -1,7 +1,7 @@
 CC := g++
 CFLAGS := -Wall -g -Iinclude
 OBJFILES := inventory_items.o inventory.o main.o
-TARGET := bin/inventory
+TARGET := inventory
 
 all: inventory
 
@@ -16,8 +16,12 @@ inventory.o: inventory.cpp
 	$(CC) $(CFLAGS) -c inventory.cpp
 		
 main.o: main.cpp
-	$(CC) (CFLAGS) -c main.cpp
+	$(CC) $(CFLAGS) -c main.cpp
+
+#%.o: %.cpp
+#		$(CC) $(CFLAGS) -c $<
 
 clean:
 	@echo " Cleaning...";
 	rm -r *o $(TARGET)
+

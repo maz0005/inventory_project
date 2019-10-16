@@ -22,7 +22,7 @@ int main() {
  Login_Handler(file_name);
  
  /*Startup the system. Retrieve saved data*/
- Startup_Handler(file_name, user_name, password, title, biggest_index, inventory_numbers,
+ Startup_Handler(file_name, user_name, password, title, inventory_numbers,
                  user_items, electronic_items, furniture_items, clothing_items, book_items);
  
  while (1) {
@@ -41,7 +41,7 @@ int main() {
  						else if (!input.compare("4\0"));
        else if (!input.compare("5\0"));
       	else if (!input.compare("6\0")) break;
- 						else std::cout << "Please enter a valid option\n" std::endl;
+ 						else std::cout << "Please enter a valid option\n" << std::endl;
  				}
  		}
 
@@ -52,7 +52,7 @@ int main() {
  						else if (!input.compare("2\0"));
  						else if (!input.compare("3\0"));
  						else if (!input.compare("4\0")) break;
- 						else std::cout << "Please enter a valid option\n" std::endl;
+ 						else std::cout << "Please enter a valid option\n" << std::endl;
      }
  		}
 
@@ -69,7 +69,7 @@ int main() {
  		}
 
  		else {
- 				std::cout << "Please enter a valid option\n" std::endl;
+ 				std::cout << "Please enter a valid option\n" << std::endl;
  		}
  }
  

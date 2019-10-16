@@ -18,7 +18,7 @@ enum DISPLAY_FILTER {KEYWORD = 0, CATEGORY = 1, BRAND = 2, INV_NUM = 3};
 */
 struct Dynamic_Array {
 bool* pointer;
-double size;
+unsigned long int size;
 };
 
 /**
@@ -59,6 +59,6 @@ double New_Inv_Number(void);
 */
 void Save_System(void);
 
-void Login_Handler(std::string user_name_In, std::string password_In);
+void Login_Handler(const std::string &file_name_In);
 
 #endif

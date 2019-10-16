@@ -18,7 +18,7 @@ inventory.o: inventory.cpp
 main.o: main.cpp
 	$(CC) $(CFLAGS) -c main.cpp
 
-#%.o: %.cpp
+#./%.o: %.cpp
 #		$(CC) $(CFLAGS) -c $<
 
 clean:

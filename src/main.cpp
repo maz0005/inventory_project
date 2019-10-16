@@ -32,6 +32,7 @@ int main() {
   
  		if (!input.compare("1\0")) { /*View/Edit Inventory*/
  				while(1) {
+ 						Display_Menu(INVENTORY);
  						std::cout << "Enter one of the available options and press enter: ";
  						getline(std::cin, input);
        /*Call a specific handler*/
@@ -39,7 +40,7 @@ int main() {
  						else if (!input.compare("2\0"));
  						else if (!input.compare("3\0"));
  						else if (!input.compare("4\0"));
-       else if (!input.compare("5\0"));
+        else if (!input.compare("5\0"));
       	else if (!input.compare("6\0")) break;
  						else std::cout << "Please enter a valid option\n" << std::endl;
  				}
@@ -65,7 +66,7 @@ int main() {
  		}
 
  		else if (!input.compare("5\0")) { /*Exit*/
- 				exit(1);	
+ 				exit(0);	
  		}
 
  		else {

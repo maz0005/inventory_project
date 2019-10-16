@@ -189,7 +189,7 @@ void Manage_Acc_Items(void) {
 }
 
 unsigned long int New_Inv_Number(Dynamic_Array array_In) {
-unsigned int previous_size = array_In.size; /*More space now available. Hold next available number to return*/
+unsigned long int previous_size = array_In.size; /*More space now available. Hold next available number to return*/
  for(unsigned long int i = 0; i < (array_In.size - 1); i++) { /*Find next available inventory number*/
  		if (!array_In.pointer[i]) {
 				array_In.pointer[i] = true;
@@ -292,7 +292,7 @@ void Login_Handler(const std::string &file_name_In) {
  		std::getline(std::cin, user_name_2);
  		password_2 = getpass("Password: ", true);
 
- 		if ((user_name_2.compare(user_name)) || (password_2.compare(password))) std::cout  << "Invalid user name or password" << std::endl;
+ 		if ((user_name_2.compare(user_name)) | (password_2.compare(password))) std::cout  << "Invalid user name or password" << std::endl;
  		else break;
  } 
 

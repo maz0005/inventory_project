@@ -21,6 +21,7 @@ bool* pointer;
 unsigned long int size;
 };
 
+
 /**
 @brief Retrieve previously saved data from 
 @param input_file File holding previously saved data

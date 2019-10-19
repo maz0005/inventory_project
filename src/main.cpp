@@ -36,12 +36,15 @@ int main() {
  						std::cout << "Enter one of the available options and press enter: ";
  						getline(std::cin, input);
        /*Call a specific handler*/
- 						if (!input.compare("1\0"));
- 						else if (!input.compare("2\0"));
- 						else if (!input.compare("3\0"));
- 						else if (!input.compare("4\0"));
-        else if (!input.compare("5\0"));
-      	else if (!input.compare("6\0")) break;
+ 						if (!input.compare("1\0")); /*Display entire inventory*/
+ 								//display_handler();
+ 						else if (!input.compare("2\0")); /*Display by option*/
+ 								//display_bo_handler();
+ 						else if (!input.compare("3\0")); /*Manage prices*/
+ 								//price_handler();
+ 						else if (!input.compare("4\0")); /*Add/Remove from inventory*/
+ 								//add_remove_handler();
+      					else if (!input.compare("5\0")) break; /*Return to Main Menu*/
  						else std::cout << "Please enter a valid option\n" << std::endl;
  				}
  		}
@@ -49,16 +52,17 @@ int main() {
  		else if (!input.compare("2\0")) { /*Manage Acceptable Items*/
      while(1) {
        /*Call a specific handler*/
- 						if (!input.compare("1\0"));
- 						else if (!input.compare("2\0"));
- 						else if (!input.compare("3\0"));
- 						else if (!input.compare("4\0")) break;
+ 						if (!input.compare("1\0")); /*Display Acceptable Item(s)*/
+     					//display_accept_handler();
+ 						else if (!input.compare("2\0")); /*Add/Remove Acceptable Item(s)*/
+     					//add_remove_accept_handler();
+ 						else if (!input.compare("3\0")) break; /*Return to Main Menu*/
  						else std::cout << "Please enter a valid option\n" << std::endl;
      }
  		}
 
  		else if (!input.compare("3\0")) { /*Change Username/Password*/
- 			
+ 				//modify_credentials();
  		}
 
  		else if (!input.compare("4\0")) { /*Change Company Name*/
@@ -66,6 +70,7 @@ int main() {
  		}
 
  		else if (!input.compare("5\0")) { /*Exit*/
+ 				//update file here
  				exit(0);	
  		}
 

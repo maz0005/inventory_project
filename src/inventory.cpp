@@ -48,7 +48,7 @@ void Startup_Handler(const std::string &file_name_In, std::string &user_name_In,
  	
  std::cout << "Loading system...\n" << std::endl;
  getline(input_file, temp); /*Get inventory type*/
- while(temp.compare("end_all_items\0")) {
+ while(temp.compare("end_all_items\0")) { /*Check if there are any more items*/
 
   		if (!temp.compare("User Item\0")) { /*Check if user created a specific item*/
  				getline(input_file, data[0]); /*Get inventory number*/

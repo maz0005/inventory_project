@@ -6,8 +6,7 @@
 
 bool FULL = 0; /*Set to 1 when inventory full*/
 
-void Startup_Handler(const std::string &file_name_In, std::string &user_name_In, std::string &password_In, std::string &title_In, Dynamic_Array &inventory_numbers_In, std::vector<User_Item> &user_items_In, std::vector<Electronic> &electronic_items_In, std::vector<Furniture> &furniture_items_In, 
-		     std::vector<Clothing> &clothing_items_In, std::vector<Book> &book_items_In) {
+void Startup_Handler(const std::string &file_name_In, std::string &user_name_In, std::string &password_In, std::string &title_In, Dynamic_Array &inventory_numbers_In, HashMap<unsigned long, Item> &database_In) {
 
  std::string data[14]; /*Where data will be stored to instantiate objects*/
  std::vector<std::string> misc_names;
@@ -40,9 +39,9 @@ void Startup_Handler(const std::string &file_name_In, std::string &user_name_In,
 	 	getline(input_file, temp); /*Remove 'end_title from stream'*/
  }
  	
- /*Allocate memory for index numbers*/
+ /*Allocate memory for inventory numbers*/
  getline(input_file, temp);
- inventory_numbers_In.size = std::stod(temp, NULL);
+ inventory_numbers_In.size = std::stoul(temp, NULL);
  if (inventory_numbers_In.size < 9999) { inventory_numbers_In.pointer = (bool *) malloc(sizeof(bool) * 10000); }
  else { inventory_numbers_In.pointer = (bool *) malloc (sizeof(bool) * inventory_numbers_In.size); }
  	
@@ -63,7 +62,7 @@ void Startup_Handler(const std::string &file_name_In, std::string &user_name_In,
  				} while(temp2.compare("end_user_item\0"));
 
  				User_Item item = User_Item(temp, misc_names, misc_values);
- 				user_items_In.push_back(item);
+        database_In.put(stoul(data[1]), item);
  				misc_names.clear();
  				misc_values.clear();
  		}
@@ -76,22 +75,22 @@ void Startup_Handler(const std::string &file_name_In, std::string &user_name_In,
  				if (!temp.compare("Electronic\0")) {
  						for (int i = 7; i < 10; i++) getline(input_file, data[i]); 
  						Electronic item = Electronic(data[0], data[1], data[2], data[3], data[4], data[5], data[6], data[7], data[8], data[9]);
- 						electronic_items_In.push_back(item);
+            database_In.put(stoul(data[1]), item);
  				}
 
  				else if (!temp.compare("Book\0")) {
  						for (int i = 7; i < 12; i++) getline(input_file, data[i]); 
  						Book item = Book(data[0], data[1], data[2], data[3], data[4], data[5], data[6], data[7], data[8], data[9], data[10], data[11]);
- 						book_items_In.push_back(item);
- 				}
+ 				    database_In.put(stoul(data[1]), item);
+        }
 
  				else if (!temp.compare("Furniture\0")) {
  						for (int i = 7; i < 14; i++) getline(input_file, data[i]); 
  						Furniture item = Furniture(data[0], data[1], data[2], data[3], data[4], data[5], data[6], data[7], data[8], data[9], data[10], data[11], data[12], data[13]);
- 						furniture_items_In.push_back(item);
- 				}
+ 				    database_In.put(stoul(data[1]), item);
+        }
 
-  				else if (!temp.compare("Clothing\0")) {
+  			else if (!temp.compare("Clothing\0")) {
  						for (int i = 7; i < 12; i++) getline(input_file, data[i]);
  						
  						getline(input_file, temp);
@@ -100,13 +99,14 @@ void Startup_Handler(const std::string &file_name_In, std::string &user_name_In,
  								getline(input_file, temp);
  								material_percentages.push_back(temp);
  								getline(input_file, temp);
- 						}
+ 				    }
 
  						Clothing item = Clothing(data[0], data[1], data[2], data[3], data[4], data[5], data[6], data[7], data[8], data[9], data[10], data[11], materials, material_percentages);
- 						clothing_items_In.push_back(item);
- 						materials.clear();
- 						material_percentages.clear();
- 				}
+ 				    database_In.put(stoul(data[1]), item);
+        }
+
+        materials.clear();
+        material_percentages.clear();
  		}
 
  		getline(input_file, temp);

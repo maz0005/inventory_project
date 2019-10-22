@@ -1,3 +1,6 @@
+#ifndef HASH_MAP
+#define HASH_MAP
+
 #include <cstddef>
 #define TABLE_SIZE 10
 
@@ -45,7 +48,7 @@ template <typename K>
 struct KeyHash {
     unsigned int operator()(const K& key) const
     {
-        return reinterpret_cast<unsigned int>(key) % TABLE_SIZE;
+        return (key) % TABLE_SIZE;
     }
 };
 
@@ -89,7 +92,7 @@ public:
     }
 
     void put(const K &key, const V &value) {
-        unsigned long hashValue = hashFunc(key);
+        unsigned int hashValue = hashFunc(key);
         HashNode<K, V> *prev = NULL;
         HashNode<K, V> *entry = table[hashValue];
 
@@ -142,3 +145,5 @@ private:
     HashNode<K, V> **table;
     F hashFunc;
 };
+
+#endif

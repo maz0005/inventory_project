@@ -3,7 +3,6 @@
 #include <iostream>
 #include "../include/inventory_items.h"
 #include "../include/inventory.h"
-#include "hash_map.cpp"
 
 
 int main() {
@@ -24,8 +23,7 @@ int main() {
  Login_Handler(file_name);
  
  /*Startup the system. Retrieve saved data*/
- Startup_Handler(file_name, user_name, password, title, inventory_numbers,
-                 user_items, electronic_items, furniture_items, clothing_items, book_items);
+ Startup_Handler(file_name, user_name, password, title, inventory_numbers, database);
  
  while (1) {
    Display_Menu(MAIN_MENU);

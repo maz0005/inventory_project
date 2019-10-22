@@ -3,6 +3,7 @@
 #include <iostream>
 #include "../include/inventory_items.h"
 #include "../include/inventory.h"
+#include "hash_map.cpp"
 
 
 int main() {
@@ -17,7 +18,8 @@ int main() {
  std::string input;
  Dynamic_Array inventory_numbers;
  std::string file_name = "inventory_data.txt";
-  
+ 
+ HashMap<unsigned long, Item> database;
  /*Handle Login if needed*/
  Login_Handler(file_name);
  
@@ -82,3 +84,4 @@ int main() {
 
  return 0;
 }
+

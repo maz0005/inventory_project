@@ -1,5 +1,6 @@
+#include <cstddef>
+#define TABLE_SIZE 10
 
-#def TABLE_SIZE 10
 
 /*Hash Node*/
 template <typename K, typename V>
@@ -54,7 +55,7 @@ template <typename K, typename V, typename F = KeyHash<K>>
 class HashMap {
 public:
     HashMap() {
-        // construct zero initialized hash table of size
+        // construct zero initialized hash table of size TABLE_SIZE
         table = new HashNode<K, V> *[TABLE_SIZE]();
     }
 

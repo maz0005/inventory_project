@@ -72,6 +72,7 @@ void Startup_Handler(const std::string &file_name_In, std::string &user_name_In,
  				data[0] = temp;
  				for (int i = 1; i < 7; i++) getline(input_file, data[i]); /*Get common members amongst all objects*/
         inventory_numbers_In.pointer[stoul(data[1], NULL)] = true; /*Set index as taken*/
+        
  				if (!temp.compare("Electronic\0")) {
  						for (int i = 7; i < 10; i++) getline(input_file, data[i]); 
  						Electronic item = Electronic(data[0], data[1], data[2], data[3], data[4], data[5], data[6], data[7], data[8], data[9]);

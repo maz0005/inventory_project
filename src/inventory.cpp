@@ -195,7 +195,7 @@ unsigned long int New_Inv_Number(std::vector<bool> vector_In) {
  /*No number available. Allocate more memory*/
  try {
     for(unsigned long int i = 0; i < (vector_In.size() - 1); i++) { /*Find next available inventory number*/
-        if (vector_In[i]) {
+        if (!vector_In[i]) {
             vector_In[i] = true;
             return i; /*Return inventory number*/
         }

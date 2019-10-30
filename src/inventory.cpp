@@ -6,7 +6,7 @@
 
 bool FULL = 0; /*Set to 1 when inventory full*/
 
-void Startup_Handler(const std::string &file_name_In, std::string &user_name_In, std::string &password_In, std::string &title_In, Dynamic_Array &inventory_numbers_In, HashMap<unsigned long, Item> &database_In) {
+void Startup_Handler(const std::string &file_name_In, std::string &user_name_In, std::string &password_In, std::string &title_In, std::vector<bool> &inventory_numbers_In, HashMap<unsigned long, Item> &database_In) {
 
  std::string data[14]; /*Where data will be stored to instantiate objects*/
  std::vector<std::string> misc_names;
@@ -41,9 +41,9 @@ void Startup_Handler(const std::string &file_name_In, std::string &user_name_In,
  	
  /*Allocate memory for inventory numbers*/
  getline(input_file, temp);
- inventory_numbers_In.size = std::stoul(temp, NULL);
- if (inventory_numbers_In.size < 9999) { inventory_numbers_In.pointer = (bool *) malloc(sizeof(bool) * 10000); }
- else { inventory_numbers_In.pointer = (bool *) malloc (sizeof(bool) * inventory_numbers_In.size); }
+ unsigned long inventory_size = std::stoul(temp, NULL);
+
+ inventory_numbers_In.reserve(inventory_size);
  	
  std::cout << "Loading system...\n" << std::endl;
  getline(input_file, temp); /*Get inventory type*/
@@ -51,7 +51,7 @@ void Startup_Handler(const std::string &file_name_In, std::string &user_name_In,
 
   		if (!temp.compare("User Item\0")) { /*Check if user created a specific item*/
  				getline(input_file, data[0]); /*Get inventory number*/
-				inventory_numbers_In.pointer[std::stoul(data[0], NULL)] = true;
+				inventory_numbers_In[std::stoul(data[0], NULL)] = true;
  				getline(input_file, temp2);
  				do {
  						misc_names.push_back(temp2);
@@ -70,7 +70,7 @@ void Startup_Handler(const std::string &file_name_In, std::string &user_name_In,
  		else { /*Check if item is one of the hardcoded items*/
  				data[0] = temp;
  				for (int i = 1; i < 7; i++) getline(input_file, data[i]); /*Get common members amongst all objects*/
-        inventory_numbers_In.pointer[stoul(data[1], NULL)] = true; /*Set index as taken*/
+        inventory_numbers_In[stoul(data[1], NULL)] = true; /*Set index as taken*/
         
  				if (!temp.compare("Electronic\0")) {
  						for (int i = 7; i < 10; i++) getline(input_file, data[i]); 
@@ -189,20 +189,23 @@ void Manage_Acc_Items(void) {
 
 }
 
-unsigned long int New_Inv_Number(Dynamic_Array array_In) {
-unsigned long int previous_size = array_In.size; /*More space now available. Hold next available number to return*/
- for(unsigned long int i = 0; i < (array_In.size - 1); i++) { /*Find next available inventory number*/
- 		if (!array_In.pointer[i]) {
-				array_In.pointer[i] = true;
-				return i; /*Return inventory number*/
-		}
- }
+unsigned long int New_Inv_Number(std::vector<bool> vector_In) {
+
 	
  /*No number available. Allocate more memory*/
  try {
- 		array_In.pointer = (bool *) realloc(array_In.pointer, (sizeof(bool) * (array_In.size * 2))); /*Double the size*/
-	 	
-	 	array_In.size = array_In.size * 2;
+    for(unsigned long int i = 0; i < (vector_In.size() - 1); i++) { /*Find next available inventory number*/
+        if (vector_In[i]) {
+            vector_In[i] = true;
+            return i; /*Return inventory number*/
+        }
+     }
+
+    /*No number available. Allocate more memory*/
+    unsigned long int previous_size = vector_In.size();
+ 		vector_In.resize(previous_size * 2);
+    vector_In[previous_size] = true;
+    return previous_size;
  }
  
  catch (...) {
@@ -210,7 +213,6 @@ unsigned long int previous_size = array_In.size; /*More space now available. Hol
 	 	exit(0);
  }
 	
- return previous_size;
 }
 
 void Save_System(void){

@@ -6,16 +6,11 @@
 
 
 int main() {
- std::vector<User_Item> user_items;
- std::vector<Electronic> electronic_items;
- std::vector<Furniture> furniture_items;
- std::vector<Clothing> clothing_items;
- std::vector<Book> book_items;
  std::string user_name;
  std::string password;
  std::string title;
  std::string input;
- Dynamic_Array inventory_numbers;
+ std::vector<bool> inventory_numbers;
  std::string file_name = "inventory_data.txt";
  
  HashMap<unsigned long, Item> database;
@@ -34,8 +29,9 @@ int main() {
  				while(1) {
  						Display_Menu(INVENTORY);
  						std::cout << "Enter one of the available options and press enter: ";
+
+ 						/*Call a specific handler*/
  						getline(std::cin, input);
-       /*Call a specific handler*/
  						if (!input.compare("1\0")); /*Display entire inventory*/
  								//display_handler();
  						else if (!input.compare("2\0")); /*Display by option*/

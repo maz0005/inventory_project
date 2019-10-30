@@ -14,22 +14,13 @@ enum DISPLAY_OPTION {MAIN_MENU = 0, INVENTORY = 1, INV_OPTION = 2, ACCEPTABLE = 
 enum DISPLAY_FILTER {KEYWORD = 0, CATEGORY = 1, BRAND = 2, INV_NUM = 3};
 
 /**
-@brief Dynamic array that will change its size frequently
-*/
-struct Dynamic_Array {
-bool* pointer;
-unsigned long int size;
-};
-
-
-/**
 @brief Retrieve previously saved data from 
 @param input_file File holding previously saved data
 @param user_name_In Username used for login
 @param password Password used for login
 @param &vector<User_Item>, &vector<Electronic>, &vector<Furniture>, &vector<Clothing>, &vector<Book> vectors you want items stored in.
 */
-void Startup_Handler(const std::string &file_name_In, std::string &user_name_In, std::string &password_In, std::string &title_In, Dynamic_Array &inventory_numbers_In, HashMap<unsigned long, Item> &database_In);
+void Startup_Handler(const std::string &file_name_In, std::string &user_name_In, std::string &password_In, std::string &title_In, std::vector<bool> &inventory_numbers_In, HashMap<unsigned long, Item> &database_In);
 
 /**
 @brief Display one of the menu options option
